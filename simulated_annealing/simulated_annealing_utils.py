@@ -9,23 +9,75 @@ Created on Tue Jan  1 12:16:25 2019
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+from temperature_params import TemperatureParams
+from optimization_solution import OptimizationSolution
 
 
-def combinatorial_simulated_annealing(temp_params, iteration_size, initial_solution, objective_function):
+def run_simulated_annealing(temp_params, iteration_size, initial_solution):
     """Runs the simulated annealing algorithm for a combinatorial problem
     
+    Parameters
+    ----------
+    temp_params: TemperatureParams
+        A TemperatureParams object for handling the temperature parameter
+        throughout the simulated annealing algorithm
+    iteration_size: function
+        A function to calculate the number of steps taken at each temperature.
+        The function accept one parameter, a float specifying the current
+        temperature. It then returns an integer specifying the number of steps
+        for the simulated annealing algorithm to take at that temperature
+    initial_solution: OptimizationSolution
+        The initial OptimizationSolution used to initialize the algorithm
+        
+    Returns
+    -------
+    list, list
+        Two lists of equal size. The first list contains floats of the
+        temperatures used in the algorithm. The second list contains
+        OptimizationSolution objects specifying the final solution
+        taken for each temperature
+        
     """
     temperatures = [None for _ in range(temp_params.get_number_of_temperatures())]
-    final_cost_per_temperature = [None for _ in range(temp_params.get_number_of_temperatures())]
+    final_solution_per_temperature = [None for _ in range(temp_params.get_number_of_temperatures())]
     curr_solution = initial_solution
     for t in range(temp_params.get_number_of_temperatures()):
         for step in range(iteration_size(t)):
-            curr_solution, solution_cost = run_combinatorial_step(temp_params.get_current_temperature(), 
-                                                                  curr_solution, objective_function)
+            curr_solution = run_annealing_step(temp_params.get_current_temperature(), curr_solution)
         temperatures[t] = temp_params.get_current_temperature()
-        final_cost_per_temperature[t] = solution_cost
+        final_solution_per_temperature[t] = curr_solution
         temp_params.update_temperature()
-    return temperatures, final_cost_per_temperature
+    return temperatures, final_solution_per_temperature
+
+
+def run_annealing_step(curr_temp, curr_solution):
+    """Runs one step of the combinatorial version of the simulated
+    annealing algorithm at the current temperature and solution
+    
+    This step generates a new solution in the neighbourhood of
+    curr_solution. This new solution is taken if it has a better
+    objective value or if the value of the simulated annealing
+    function at the current iteration is greater than a random
+    number in the range [0, 1]
+    
+    Parameters
+    ----------
+    curr_temp: float
+        The current temperature at this step in the algorithm
+    curr_solution: OptimizationSolution
+        The current solution when this step is initiated
+        
+    Returns
+    -------
+    OptimizationSolution
+        The OptimizationSolution calculated in the current step
+        
+    """
+    new_solution = curr_solution.find_a_neighbour_solution()
+    if should_change_solution(curr_solution.get_solution_value(), new_solution.get_solution_value(), curr_temp):
+        return new_solution
+    return curr_solution
+
 
 def simulated_annealing_function(old_objective_value, new_objective_value, temperature):
     """Calculates the value of the simulated annealing function
@@ -57,6 +109,7 @@ def simulated_annealing_function(old_objective_value, new_objective_value, tempe
     """
     exponent = (new_objective_value - old_objective_value) / temperature
     return 1 / (np.exp(exponent))
+
 
 def should_change_solution(old_objective_value, new_objective_value, temperature):
     """Determines whether the candidate solution should be accepted

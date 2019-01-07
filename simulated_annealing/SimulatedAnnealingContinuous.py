@@ -44,14 +44,16 @@ for i in range(M):
         if f_new <= f_curr:
             x0 = xt
             y0 = yt
+            f_curr = f_new
         else:
             ran_1 = np.random.rand()
             formula = 1 / (np.exp((f_new - f_curr)/T0))
             if ran_1 <= formula:
                 x0 = xt
                 y0 = yt
+                f_curr = f_new
     temp.append(T0)
-    f_min.append()
+    f_min.append(f_curr)
     T0 *= alpha
     
 print("X is %.3f" % x0)

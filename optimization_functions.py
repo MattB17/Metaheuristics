@@ -6,6 +6,9 @@ Created on Sat Jan  5 21:47:09 2019
 @author: matthewbuckley
 """
 
+import numpy as np
+import pandas as pd
+
 
 def quadratic_assignment_problem_objective(dist_matrix, flow_matrix, facility_order):
     """Calculates the objective value for the quadratic assignment problem

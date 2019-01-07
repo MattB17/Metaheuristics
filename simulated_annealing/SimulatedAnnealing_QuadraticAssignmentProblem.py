@@ -78,6 +78,7 @@ for i in range(M):
             
         if (obj_value_t < obj_value_0) or (rand1 <= formula):
             x0 = xt
+            obj_value_0 = obj_value_t
             
     temperatures.append(T0)
     min_costs.append(obj_value_0)
