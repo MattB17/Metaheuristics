@@ -6,11 +6,79 @@ Created on Tue Jan  1 12:16:25 2019
 @author: matthewbuckley
 """
 
+import sys
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from temperature_params import TemperatureParams
 from optimization_solution import OptimizationSolution
+sys.path.append("../")
+import random
+import copy
+from optimization_functions import quadratic_assignment_problem_objective
+
+
+def pick_neighbour_for_qap(solution):
+    """selects a neighbour of solution
+    
+    A neighbour is selected by swapping two randomly chosen elements
+    of solution
+    
+    Parameters
+    ----------
+    solution: list
+        A solution to the quadratic assignment problem, specifying an
+        ordering of the facilities
+        
+    Returns
+    -------
+    list
+        Another solution to the quadratic assignment problem, obtained
+        by swapping two random facilities in the ordering given by solution
+        
+    """
+    a, b = random.sample(range(0, len(solution)), 2)
+    new_solution = copy.deepcopy(solution)
+    new_solution[a] = solution[b]
+    new_solution[b] = solution[a]
+    return new_solution
+
+
+def quadratic_assignment_simulated_annealing_solver(flow_matrix, dist_matrix, initial_array, iteration_size, temp_params):
+    """Runs the simulated annealing algorithm for the quadratic assignment
+    problem, starting from the initial solution given by initial_array
+    
+    Parameters
+    ----------
+    flow_matrix: pandas.DataFrame
+        A square matrix, specifying the flows between facilities
+    dist_matrix: pandas.DataFrame
+        A square matrix, specifying the distances between the facilities
+    inital_array: list
+        An initial solution to the quadratic assignment problem, that is
+        the list represents an ordering of the facilities
+    iteration_size: function
+        A function to determine the number of iterations of the algorithm
+        for each temperature. The function accepts a float parameter,
+        representing the current temperature, and returns an integer
+        representing the number of iterations to take at the current temperature
+    temp_params: TemperatureParams
+        The TemperatureParams object specifying the temperature parameters needed
+        for the simulated annealing algorithm
+        
+    Returns
+    -------
+    OptimizationSolution
+        An OptimizationSolution object, representing the final solution found by
+        the simualated annealing algorithm
+        
+    """
+    qap_obj_function = lambda solution: quadratic_assignment_problem_objective(dist_matrix, flow_matrix, solution)
+    initial_solution = OptimizationSolution(initial_array, qap_obj_function, pick_neighbour_for_qap)
+    temperatures, solutions = run_simulated_annealing(temp_params, iteration_size, initial_solution)
+    solution_vals = [solution.get_solution_value() for solution in solutions]
+    plot_final_objective_value_per_temperature(temperatures, solution_vals, "Quadratic Assignment Problem")
+    return solutions[-1]
 
 
 def run_simulated_annealing(temp_params, iteration_size, initial_solution):
