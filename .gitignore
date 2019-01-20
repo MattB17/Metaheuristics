@@ -1,2 +1,5 @@
+#Ignored directories
+metaheuristics_env/*
+
 #Ignored files
 *.DS_Store
