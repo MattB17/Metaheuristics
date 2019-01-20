@@ -6,11 +6,10 @@ Created on Tue Jan  1 12:16:25 2019
 @author: matthewbuckley
 """
 
-import sys
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from temperature_params import TemperatureParams
+from metaheuristics.simulated_annealing.temperature_params import TemperatureParams
 import random
 import copy
 from metaheuristics.optimization_functions import quadratic_assignment_problem_objective, himmelblau
