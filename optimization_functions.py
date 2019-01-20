@@ -39,15 +39,14 @@ def quadratic_assignment_problem_objective(dist_matrix, flow_matrix, facility_or
     return sum(sum(objective_value_array))
 
 
-def himmelblau(x, y):
+def himmelblau(solution_tuple):
     """An implementation of the himmelblau function
     
     Parameters
     ----------
-    x: float
-        The x coordinate of the solution
-    y: float
-        The y coordinate of the solution
+    solution_tuple: tuple
+        A two element tuple with the x and y coordinates of a
+        solution to the himmelblau function
         
     Returns
     -------
@@ -56,6 +55,7 @@ def himmelblau(x, y):
         by x and y
         
     """
+    x, y = solution_tuple
     first_term = (x ** 2) + y - 11
     second_term = x + (y ** 2) - 7
     return (first_term ** 2) + (second_term ** 2)

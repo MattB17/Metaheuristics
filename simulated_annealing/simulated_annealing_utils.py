@@ -11,11 +11,10 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from temperature_params import TemperatureParams
-sys.path.append("../")
 import random
 import copy
-from optimization_functions import quadratic_assignment_problem_objective, himmelblau
-from optimization_solution import OptimizationSolution
+from metaheuristics.optimization_functions import quadratic_assignment_problem_objective, himmelblau
+from metaheuristics.optimization_problem import OptimizationProblem
 
 
 def calculate_adjustment(additive_adjustment, multiplicative_adjustment, multiplicative_constant):
@@ -131,9 +130,9 @@ def himmelblau_simulated_annealing_solver(initial_x, initial_y, multiplicative_c
         
     """
     neighbour_finder = lambda solution: pick_neighbour_for_himmelblau(solution, multiplicative_constant)
-    initial_solution = OptimizationSolution((initial_x, initial_y), himmelblau, neighbour_finder)
+    himmelblau_problem = OptimizationProblem((initial_x, initial_y), himmelblau, neighbour_finder)
     iteration_size_function = lambda temperature: iteration_size
-    temperatures, solutions = run_simulated_annealing(temp_params, iteration_size_function, initial_solution)
+    temperatures, solutions = run_simulated_annealing(temp_params, iteration_size_function, himmelblau_problem)
     solution_vals = [solution.get_solution_value() for solution in solutions]
     plot_final_objective_value_per_temperature(temperatures, solution_vals, "Himmelblau Minimization")
     return solutions[-1]
@@ -166,15 +165,15 @@ def quadratic_assignment_simulated_annealing_solver(flow_matrix, dist_matrix, in
         
     """
     qap_obj_function = lambda solution: quadratic_assignment_problem_objective(dist_matrix, flow_matrix, solution)
-    initial_solution = OptimizationSolution(initial_array, qap_obj_function, pick_neighbour_for_qap)
+    qap_problem = OptimizationProblem(initial_array, qap_obj_function, pick_neighbour_for_qap)
     iteration_size_function = lambda temperature: iteration_size
-    temperatures, solutions = run_simulated_annealing(temp_params, iteration_size_function, initial_solution)
+    temperatures, solutions = run_simulated_annealing(temp_params, iteration_size_function, qap_problem)
     solution_vals = [solution.get_solution_value() for solution in solutions]
     plot_final_objective_value_per_temperature(temperatures, solution_vals, "Quadratic Assignment Problem")
     return solutions[-1]
 
 
-def run_simulated_annealing(temp_params, iteration_size, initial_solution):
+def run_simulated_annealing(temp_params, iteration_size, optimization_problem):
     """Runs the simulated annealing algorithm for a combinatorial problem
     
     Parameters
@@ -187,8 +186,8 @@ def run_simulated_annealing(temp_params, iteration_size, initial_solution):
         The function accept one parameter, a float specifying the current
         temperature. It then returns an integer specifying the number of steps
         for the simulated annealing algorithm to take at that temperature
-    initial_solution: OptimizationSolution
-        The initial OptimizationSolution used to initialize the algorithm
+    optimization_problem: OptimizationProblem
+        The optimization problem being solved by the algorithm
         
     Returns
     -------
@@ -201,17 +200,17 @@ def run_simulated_annealing(temp_params, iteration_size, initial_solution):
     """
     temperatures = [None for _ in range(temp_params.get_number_of_temperatures())]
     final_solution_per_temperature = [None for _ in range(temp_params.get_number_of_temperatures())]
-    curr_solution = initial_solution
     for t in range(temp_params.get_number_of_temperatures()):
         for step in range(iteration_size(t)):
-            curr_solution = run_annealing_step(temp_params.get_current_temperature(), curr_solution)
+            new_solution = run_annealing_step(temp_params.get_current_temperature(), optimization_problem)
+            optimization_problem.update_current_solution(new_solution)
         temperatures[t] = temp_params.get_current_temperature()
-        final_solution_per_temperature[t] = curr_solution
+        final_solution_per_temperature[t] = optimization_problem.get_current_solution()
         temp_params.update_temperature()
     return temperatures, final_solution_per_temperature
 
 
-def run_annealing_step(curr_temp, curr_solution):
+def run_annealing_step(curr_temp, optimization_problem):
     """Runs one step of the combinatorial version of the simulated
     annealing algorithm at the current temperature and solution
     
@@ -225,8 +224,8 @@ def run_annealing_step(curr_temp, curr_solution):
     ----------
     curr_temp: float
         The current temperature at this step in the algorithm
-    curr_solution: OptimizationSolution
-        The current solution when this step is initiated
+    optimization_problem: OptimizationProblem
+        The optimization problem being solved by simulated annealing
         
     Returns
     -------
@@ -234,8 +233,9 @@ def run_annealing_step(curr_temp, curr_solution):
         The OptimizationSolution calculated in the current step
         
     """
-    new_solution = curr_solution.find_a_neighbour_solution()
-    if should_change_solution(curr_solution.get_solution_value(), new_solution.get_solution_value(), curr_temp):
+    curr_solution = optimization_problem.get_current_solution()
+    new_solution = optimization_problem.find_neighbour_solution()
+    if should_change_solution(curr_solution.get_objective_value(), new_solution.get_objective_value(), curr_temp):
         return new_solution
     return curr_solution
 
