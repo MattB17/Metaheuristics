@@ -108,9 +108,15 @@ class OptimizationProblem:
         return OptimizationSolution(
                 new_solution_val, self._objective_function(new_solution_val))
     
-    def update_current_solution(self, new_solution):
+    def update_current_solution(self, new_solution_val):
         """Updates the current solution of the optimization problem
-        to new_solution
+        to new_solution_val
+        
+        Parameters
+        ----------
+        new_solution_val: object
+            A new solution to the optimization algorithm the
+            current_solution parameter is updated based on this
         
         Returns
         -------
@@ -121,5 +127,6 @@ class OptimizationProblem:
         Resets the current_solution attribute to new_solution
         
         """
-        self._current_solution = new_solution
+        self._current_solution = OptimizationSolution(
+                new_solution_val, self.get_objective_function()(new_solution_val))
         

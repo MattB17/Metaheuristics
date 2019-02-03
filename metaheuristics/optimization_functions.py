@@ -7,7 +7,6 @@ Created on Sat Jan  5 21:47:09 2019
 """
 
 import numpy as np
-import pandas as pd
 
 
 def quadratic_assignment_problem_objective(dist_matrix, flow_matrix, facility_order):
@@ -34,9 +33,12 @@ def quadratic_assignment_problem_objective(dist_matrix, flow_matrix, facility_or
         the quadratic assignment problem
         
     """
-    dist_array = np.array(dist_matrix.reindex(columns=facility_order, index=facility_order))
-    objective_value_array = np.array(pd.DataFrame(dist_array * flow_matrix))
-    return sum(sum(objective_value_array))
+    reindexed_dists = dist_matrix.reindex(columns=facility_order, index=facility_order)
+    #convert reindexed_dists to array, otherwise indices are matched when multiplying
+    objective_value_df = np.array(reindexed_dists) * flow_matrix
+    if objective_value_df.empty:
+        return 0
+    return sum(sum(np.array(objective_value_df)))
 
 
 def himmelblau(solution_tuple):
