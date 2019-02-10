@@ -1,9 +1,9 @@
 Author
 ======
 
-* Matt Buckley (@mattyx17_)
+* Matt Buckley (`@mattyx17`_)
 
-.. _mattyx17: https://github.com/mattyx17
+.. _`@mattyx17`: https://github.com/mattyx17
 
 
 Examples
