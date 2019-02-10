@@ -3,12 +3,12 @@ Author
 
 * Matt Buckley (@mattyx17_)
 
-.. _@mattyx17: https://github.com/mattyx17
+.. _mattyx17: https://github.com/mattyx17
 
 
 Examples
 ========
 
-Examples taken from Optimization with Metaheuristics in Python_
+Examples taken from `Optimization with Metaheuristics in Python`_
 
-.. Optimization with Metaheuristics in Python: https://www.udemy.com/optimization-with-metaheuristics/
+.. _`Optimization with Metaheuristics in Python`: https://www.udemy.com/optimization-with-metaheuristics/
