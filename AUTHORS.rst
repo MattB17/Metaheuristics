@@ -1,7 +1,7 @@
 Author
 ======
 
-* Matt Buckley (`@mattyx17`_)
+Matt Buckley (`@mattyx17`_)
 
 .. _`@mattyx17`: https://github.com/mattyx17
 
