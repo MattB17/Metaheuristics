@@ -267,6 +267,8 @@ def simulated_annealing_function(old_objective_value, new_objective_value, tempe
         of the candidate solution, and the current temperature
         
     """
+    if temperature == 0:
+        return 0
     exponent = (new_objective_value - old_objective_value) / temperature
     return 1 / (np.exp(exponent))
 

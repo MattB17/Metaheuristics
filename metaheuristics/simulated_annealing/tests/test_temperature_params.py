@@ -6,7 +6,7 @@ Created on Sat Feb  2 21:11:49 2019
 @author: matthewbuckley
 """
 
-from metaheuristics.simulated_annealing.temperature_params import TemperatureParams
+from ..temperature_params import TemperatureParams
 from unittest.mock import call, MagicMock
 
 
