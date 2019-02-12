@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from metaheuristics.simulated_annealing.simulated_annealing_utils import simulated_annealing_function
+from ..simulated_annealing_utils import simulated_annealing_function
 
 
 def test_with_zero_temperature():
