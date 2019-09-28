@@ -1,5 +1,5 @@
 .. metaheuristics documentation master file, created by
-   sphinx-quickstart on Sat Feb  9 20:40:57 2019.
+   sphinx-quickstart on Sat Sep 28 11:57:20 2019.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
