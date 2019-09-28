@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from ..simulated_annealing_utils import run_annealing_step
+from metaheuristics.simulated_annealing.simulated_annealing_utils \
+    import run_annealing_step
 from unittest.mock import patch, MagicMock
 
 
@@ -19,8 +20,8 @@ def test_when_solution_changes():
     mock_optimization_problem.find_neighbour_solution.assert_called_once()
     mock_decision.assert_called_once_with(12, 9, 1200)
     assert result == mock_new_solution
-    
-    
+
+
 def test_when_solution_does_not_change():
     mock_optimization_problem = MagicMock()
     mock_curr_solution = MagicMock()

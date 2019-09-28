@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-
-from metaheuristics.optimization_problem import OptimizationProblem
-from metaheuristics.optimization_solution import OptimizationSolution
+from metaheuristics.optimization_tools.optimization_problem \
+    import OptimizationProblem
+from metaheuristics.optimization_tools.optimization_solution \
+    import OptimizationSolution
 from unittest.mock import call, MagicMock
 
 
@@ -32,7 +32,7 @@ def test_find_neighbour_solution_once():
     objective_function_calls = [call(initial_solution), call(neighbour_solution)]
     mock_objective_function.assert_has_calls(objective_function_calls)
     mock_updater.assert_called_once_with(initial_solution)
-    
+
 
 def test_find_neighbour_solution_multiple_times():
     solution_vals = [["x", "y", "z"], ["y", "z", "x"], ["x", "z", "y"]]
@@ -53,8 +53,8 @@ def test_find_neighbour_solution_multiple_times():
     assert mock_updater.call_count == 2
     updater_calls = [call(solution_vals[0]), call(solution_vals[0])]
     mock_updater.assert_has_calls(updater_calls)
-    
-    
+
+
 def test_update_current_solution_once():
     initial_solution_val = ["a", "b","c"]
     new_solution_val = ["b", "c", "a"]
@@ -67,8 +67,8 @@ def test_update_current_solution_once():
     optimization_problem.update_current_solution(new_solution_val)
     assert optimization_problem.get_current_solution() == new_solution_val
     assert optimization_problem.get_current_objective_value() == -12.9
-    
-    
+
+
 def test_update_current_solution_multiple_times():
     solution_vals = [(0, 1), (1, 1), (2, 1)]
     objective_vals = [2.3, 2.7, 1.9]
@@ -87,4 +87,3 @@ def test_update_current_solution_multiple_times():
     assert mock_objective_function.call_count == 3
     objective_func_calls = [call(solution) for solution in solution_vals]
     mock_objective_function.assert_has_calls(objective_func_calls)
-    

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from ..simulated_annealing_utils import should_change_solution
+from metaheuristics.simulated_annealing.simulated_annealing_utils \
+    import should_change_solution
 from unittest.mock import patch, MagicMock
 
 
@@ -11,8 +12,8 @@ def test_with_better_objective_value(mock_annealing_func, monkeypatch):
     assert should_change_solution(25, 20, 300)
     mock_annealing_func.assert_not_called()
     mock_random.assert_not_called()
-    
-    
+
+
 @patch("metaheuristics.simulated_annealing.simulated_annealing_utils.simulated_annealing_function",
        return_value=0.75)
 def test_when_random_num_less_than_func_val(mock_annealing_func, monkeypatch):

@@ -1,12 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Feb  2 21:11:49 2019
-
-@author: matthewbuckley
-"""
-
-from ..temperature_params import TemperatureParams
+from metaheuristics.simulated_annealing.temperature_params \
+    import TemperatureParams
 from unittest.mock import call, MagicMock
 
 
@@ -19,8 +12,8 @@ def test_can_create():
     assert temp_params.get_current_temperature() == initial_temp
     assert temp_params.get_number_of_temperatures() == temp_changes
     temp_updater.assert_not_called()
-    
-    
+
+
 def test_temp_updater_called_once():
     initial_temp = 2000
     temp_changes = 100
@@ -53,6 +46,3 @@ def test_temp_updater_called_multiple_times():
     updater_calls = [call(390), call(380), call(370)]
     assert temp_updater.call_count == 3
     temp_updater.assert_has_calls(updater_calls)
-
-    
-    

@@ -1,5 +1,7 @@
-from metaheuristics.simulated_annealing.simulated_annealing_utils import himmelblau_simulated_annealing_solver
-from metaheuristics.simulated_annealing.temperature_params import TemperatureParams
+from metaheuristics.simulated_annealing.simulated_annealing_utils \
+    import himmelblau_simulated_annealing_solver
+from metaheuristics.simulated_annealing.temperature_params \
+    import TemperatureParams
 
 iteration_size = 15
 

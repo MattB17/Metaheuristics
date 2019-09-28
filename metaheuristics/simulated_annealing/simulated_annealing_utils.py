@@ -1,25 +1,19 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jan  1 12:16:25 2019
-
-@author: matthewbuckley
-"""
-
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from metaheuristics.simulated_annealing.temperature_params import TemperatureParams
 import random
 import copy
-from metaheuristics.optimization_functions import quadratic_assignment_problem_objective, himmelblau
-from metaheuristics.optimization_problem import OptimizationProblem
+from metaheuristics.optimization_tools.optimization_functions \
+    import quadratic_assignment_problem_objective, himmelblau
+from metaheuristics.optimization_tools.optimization_problem \
+    import OptimizationProblem
 
 
 def calculate_adjustment(additive_adjustment, multiplicative_adjustment, multiplicative_constant):
     """Calculates an adjustment to add to a coordinate of a solution
     to a continuous optimization problem
-    
+
     Parameters
     ----------
     additive_adjustment: float
@@ -31,13 +25,13 @@ def calculate_adjustment(additive_adjustment, multiplicative_adjustment, multipl
     multiplicative_constant: float
         A sensitivity parameter to help influence the magnitude of
         changes between solutions. A smaller number gives smaller changes
-        
+
     Returns
     -------
     float
         The adjustment that will be applied to a coordinate of a solution
         to a continuous optimization problem
-    
+
     """
     return (1 - (2 * (additive_adjustment < 0.5))) * multiplicative_constant * multiplicative_adjustment
 
@@ -45,7 +39,7 @@ def calculate_adjustment(additive_adjustment, multiplicative_adjustment, multipl
 def pick_neighbour_for_himmelblau(solution_tuple, multiplicative_constant):
     """Picks a solution in the neighbourhood of solution_tuple for
     the himmelblau function
-    
+
     Parameters
     ----------
     solution_tuple: tuple
@@ -55,14 +49,14 @@ def pick_neighbour_for_himmelblau(solution_tuple, multiplicative_constant):
         A sensitivity parameter that determines the magnitude of the
         distance between solution_tuple and its neighbour. A smaller
         number implies a smaller distance between the two solutions
-        
+
     Returns
     -------
     tuple
         A two element tuple containing the x and y coordinates of a
         solution to the himmelblau function in the neighbourhood of
         solution_tuple
-        
+
     """
     x_additive_adjustment = np.random.rand()
     x_multiplicative_adjustment = np.random.rand()
@@ -72,27 +66,27 @@ def pick_neighbour_for_himmelblau(solution_tuple, multiplicative_constant):
             x_additive_adjustment, x_multiplicative_adjustment, multiplicative_constant),
             solution_tuple[1] + calculate_adjustment(
                     y_additive_adjustment, y_multiplicative_adjustment, multiplicative_constant))
-    
+
 
 
 def pick_neighbour_for_qap(solution):
     """selects a neighbour of solution
-    
+
     A neighbour is selected by swapping two randomly chosen elements
     of solution
-    
+
     Parameters
     ----------
     solution: list
         A solution to the quadratic assignment problem, specifying an
         ordering of the facilities
-        
+
     Returns
     -------
     list
         Another solution to the quadratic assignment problem, obtained
         by swapping two random facilities in the ordering given by solution
-        
+
     """
     a, b = random.sample(range(0, len(solution)), 2)
     new_solution = copy.deepcopy(solution)
@@ -104,7 +98,7 @@ def pick_neighbour_for_qap(solution):
 def himmelblau_simulated_annealing_solver(initial_x, initial_y, multiplicative_constant, iteration_size, temp_params):
     """Runs the simulated annealing algorithm to minimize the himmelblau
     function, starting from the initial solution initial_x and initial_y
-    
+
     Parameters
     ----------
     initial_x: float
@@ -113,20 +107,20 @@ def himmelblau_simulated_annealing_solver(initial_x, initial_y, multiplicative_c
         The y coordinate of an initial solution to the himmelblau function
     multiplicative_constant: float
         A sensitivity parameter used to move from one solution to another. A
-        smaller value indicates that the two solutions are separated by a 
+        smaller value indicates that the two solutions are separated by a
         smaller distance
     iteration_size: function
         Determines the number of iterations at each temperature
     temp_params: TemperatureParams
         The TemperatureParams object specifying the temperature parameters needed
         for the simulated annealing algorithm
-        
+
     Returns
     -------
     OptimizationSolution
         An OptimizationSolution object, representing the final solution found by
         the simualated annealing algorithm
-        
+
     """
     neighbour_finder = lambda solution: pick_neighbour_for_himmelblau(solution, multiplicative_constant)
     himmelblau_problem = OptimizationProblem((initial_x, initial_y), himmelblau, neighbour_finder)
@@ -140,7 +134,7 @@ def himmelblau_simulated_annealing_solver(initial_x, initial_y, multiplicative_c
 def quadratic_assignment_simulated_annealing_solver(flow_matrix, dist_matrix, initial_array, iteration_size, temp_params):
     """Runs the simulated annealing algorithm for the quadratic assignment
     problem, starting from the initial solution given by initial_array
-    
+
     Parameters
     ----------
     flow_matrix: pandas.DataFrame
@@ -155,13 +149,13 @@ def quadratic_assignment_simulated_annealing_solver(flow_matrix, dist_matrix, in
     temp_params: TemperatureParams
         The TemperatureParams object specifying the temperature parameters needed
         for the simulated annealing algorithm
-        
+
     Returns
     -------
     OptimizationSolution
         An OptimizationSolution object, representing the final solution found by
         the simualated annealing algorithm
-        
+
     """
     qap_obj_function = lambda solution: quadratic_assignment_problem_objective(dist_matrix, flow_matrix, solution)
     qap_problem = OptimizationProblem(initial_array, qap_obj_function, pick_neighbour_for_qap)
@@ -174,7 +168,7 @@ def quadratic_assignment_simulated_annealing_solver(flow_matrix, dist_matrix, in
 
 def run_simulated_annealing(temp_params, iteration_size, optimization_problem):
     """Runs the simulated annealing algorithm for a combinatorial problem
-    
+
     Parameters
     ----------
     temp_params: TemperatureParams
@@ -187,7 +181,7 @@ def run_simulated_annealing(temp_params, iteration_size, optimization_problem):
         for the simulated annealing algorithm to take at that temperature
     optimization_problem: OptimizationProblem
         The optimization problem being solved by the algorithm
-        
+
     Returns
     -------
     list, list
@@ -195,7 +189,7 @@ def run_simulated_annealing(temp_params, iteration_size, optimization_problem):
         temperatures used in the algorithm. The second list contains
         OptimizationSolution objects specifying the final solution
         taken for each temperature
-        
+
     """
     temperatures = [None for _ in range(temp_params.get_number_of_temperatures())]
     final_solution_per_temperature = [None for _ in range(temp_params.get_number_of_temperatures())]
@@ -212,25 +206,25 @@ def run_simulated_annealing(temp_params, iteration_size, optimization_problem):
 def run_annealing_step(curr_temp, optimization_problem):
     """Runs one step of the combinatorial version of the simulated
     annealing algorithm at the current temperature and solution
-    
+
     This step generates a new solution in the neighbourhood of
     curr_solution. This new solution is taken if it has a better
     objective value or if the value of the simulated annealing
     function at the current iteration is greater than a random
     number in the range [0, 1]
-    
+
     Parameters
     ----------
     curr_temp: float
         The current temperature at this step in the algorithm
     optimization_problem: OptimizationProblem
         The optimization problem being solved by simulated annealing
-        
+
     Returns
     -------
     OptimizationSolution
         The OptimizationSolution calculated in the current step
-        
+
     """
     curr_solution = optimization_problem.get_current_solution()
     new_solution = optimization_problem.find_neighbour_solution()
@@ -241,10 +235,10 @@ def run_annealing_step(curr_temp, optimization_problem):
 
 def simulated_annealing_function(old_objective_value, new_objective_value, temperature):
     """Calculates the value of the simulated annealing function
-    
+
     This function is used to decide if the algorithm should accept
     a worse solution in order to possibly find a better global optimum
-    
+
     Parameters
     ----------
     old_objective_value: float
@@ -256,16 +250,16 @@ def simulated_annealing_function(old_objective_value, new_objective_value, tempe
         The temperature is a parameter denoting the willingness
         to accept worse solutions. Throughout the algorithm, the
         temperature decreases, causing the value of the simulated
-        annealing function to decrease. This signifies a reduced 
+        annealing function to decrease. This signifies a reduced
         willingness to accept worse solutions as the algorithm progresses
-        
+
     Returns
     -------
     float
         The value of the simulated annealing function based on the
         objective value of the current solution, the objective value
         of the candidate solution, and the current temperature
-        
+
     """
     if temperature == 0:
         return 0
@@ -276,11 +270,11 @@ def simulated_annealing_function(old_objective_value, new_objective_value, tempe
 def should_change_solution(old_objective_value, new_objective_value, temperature):
     """Determines whether the candidate solution should be accepted
     instead of the current solution.
-    
+
     The candidate solution is accepted if it has a better objective
     value or if the value of the simulated annealing function is at
     least as large as a random number between 0 and 1
-    
+
     Parameters
     ----------
     old_objective_value: float
@@ -292,9 +286,9 @@ def should_change_solution(old_objective_value, new_objective_value, temperature
         The temperature is a parameter denoting the willingness
         to accept worse solutions. Throughout the algorithm, the
         temperature decreases, causing the value of the simulated
-        annealing function to decrease. This signifies a reduced 
+        annealing function to decrease. This signifies a reduced
         willingness to accept worse solutions as the algorithm progresses
-        
+
     Returns
     -------
     bool
@@ -303,7 +297,7 @@ def should_change_solution(old_objective_value, new_objective_value, temperature
         candidate solution has a better objective value than the
         current solution or if the value of the simulated annealing
         function is at least as large as a random number in [0, 1]
-        
+
     """
     if new_objective_value < old_objective_value:
         return True
@@ -313,9 +307,9 @@ def should_change_solution(old_objective_value, new_objective_value, temperature
 
 
 def plot_final_objective_value_per_temperature(temperatures, objective_values, problem_name):
-    """Uses matplotlib to plot the final objective value for each 
+    """Uses matplotlib to plot the final objective value for each
     temperature used in the simulated annealing algorithm
-    
+
     Parameters
     ----------
     temperatures: list
@@ -326,15 +320,15 @@ def plot_final_objective_value_per_temperature(temperatures, objective_values, p
     problem_name: str
         The name of the problem to which the simulated
         annuealing algorithm was applied
-        
+
     Returns
     -------
     None
-    
+
     Side Effect
     -----------
     Produces a plot of objective_values versus temperatures
-    
+
     """
     max_temp = max(temperatures)
     min_temp = min(temperatures)

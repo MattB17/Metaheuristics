@@ -1,10 +1,6 @@
-#Ignored directories
+#Ignoreall pycache
 __pycache__/
-metaheuristics_env/
-bin/
-build/
-dist/
 
 #Ignored files
 *.DS_Store
-*.egg-info/
+*.egg-info

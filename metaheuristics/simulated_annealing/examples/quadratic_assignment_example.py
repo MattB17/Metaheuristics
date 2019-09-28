@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Dec 26 10:31:57 2018
-
-@author: matthewbuckley
-"""
-
 import pandas as pd
 from metaheuristics.simulated_annealing.temperature_params import TemperatureParams
 from metaheuristics.simulated_annealing.simulated_annealing_utils import quadratic_assignment_simulated_annealing_solver
@@ -37,8 +29,7 @@ temperature_params = TemperatureParams(initial_temperature=1500.0,
 
 
 final_solution = quadratic_assignment_simulated_annealing_solver(
-        Flow, Dist, initial_solution, iteration_size, temperature_params)  
+        Flow, Dist, initial_solution, iteration_size, temperature_params)
 
 print("The final solution is {0} with objective value {1}"
-      .format(final_solution.get_solution_value(), final_solution.get_objective_value()))        
-            
+      .format(final_solution.get_solution_value(), final_solution.get_objective_value()))

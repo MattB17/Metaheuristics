@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-from metaheuristics.optimization_solution import OptimizationSolution
+from metaheuristics.optimization_tools.optimization_solution \
+    import OptimizationSolution
 
 
 def test_can_create_optimization_solution():
