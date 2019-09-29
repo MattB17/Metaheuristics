@@ -1,4 +1,5 @@
-# Metaheuristics
+Metaheuristics
+==============
 
 This is a collection of metahueristic algorithms for optimization problems.
 
@@ -8,7 +9,8 @@ To clone this repo:
 - `git clone https://github.com/mattyx17/Metaheuristics.git`
 - `cd Metaheuristics`
 
-### Installation Options
+Installation Options
+--------------------
 
 * To install in a development environment: `pip install -e .`
 
