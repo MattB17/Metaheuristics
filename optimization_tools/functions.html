@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Optimization Functions &mdash; Metaheuristics 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'0.1.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Metaheuristics
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools to Solve Optimization Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulated_annealing/annealing.html">Simulated Annealing Algorithm</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Metaheuristics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Optimization Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/optimization_tools/functions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-metaheuristics.optimization_tools.optimization_functions">
+<span id="optimization-functions"></span><h1>Optimization Functions<a class="headerlink" href="#module-metaheuristics.optimization_tools.optimization_functions" title="Permalink to this headline">¶</a></h1>
+<p>This module stores a set of methods that serve as the objective functions
+for various optimization problems</p>
+<dl class="function">
+<dt id="metaheuristics.optimization_tools.optimization_functions.himmelblau">
+<code class="descclassname">metaheuristics.optimization_tools.optimization_functions.</code><code class="descname">himmelblau</code><span class="sig-paren">(</span><em>solution_tuple</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/metaheuristics/optimization_tools/optimization_functions.html#himmelblau"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metaheuristics.optimization_tools.optimization_functions.himmelblau" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of the himmelblau function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>solution_tuple: tuple</strong></p>
+<blockquote>
+<div><p>A two element tuple with the x and y coordinates of a
+solution to the himmelblau function</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">float</p>
+<blockquote class="last">
+<div><p>The value of the himmelblau function at the solution given
+by x and y</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="metaheuristics.optimization_tools.optimization_functions.quadratic_assignment_problem_objective">
+<code class="descclassname">metaheuristics.optimization_tools.optimization_functions.</code><code class="descname">quadratic_assignment_problem_objective</code><span class="sig-paren">(</span><em>dist_matrix</em>, <em>flow_matrix</em>, <em>facility_order</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/metaheuristics/optimization_tools/optimization_functions.html#quadratic_assignment_problem_objective"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metaheuristics.optimization_tools.optimization_functions.quadratic_assignment_problem_objective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the objective value for the quadratic assignment problem</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dist_matrix: pandas.DataFrame</strong></p>
+<blockquote>
+<div><p>The matrix of distance values. This is a square matrix where the
+entry in row i, column j represents the distance from facility i
+to facility j</p>
+</div></blockquote>
+<p><strong>flow_matrix: pandas.DataFrame</strong></p>
+<blockquote>
+<div><p>The matrix of flow values. This is a square matrix where the
+entry in row i, column j represents the flow from facility i
+to facility j</p>
+</div></blockquote>
+<p><strong>facility_order: list</strong></p>
+<blockquote>
+<div><p>A list representing an ordering of the facilities, corresponding
+to a solution</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">float</p>
+<blockquote class="last">
+<div><p>The objective value for the solution given by facility_order to
+the quadratic assignment problem</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Matt Buckley
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

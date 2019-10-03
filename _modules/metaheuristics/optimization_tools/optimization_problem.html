@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>metaheuristics.optimization_tools.optimization_problem &mdash; Metaheuristics 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../../',
+              VERSION:'0.1.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Metaheuristics
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization_tools/tools.html">Tools to Solve Optimization Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../simulated_annealing/annealing.html">Simulated Annealing Algorithm</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Metaheuristics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>metaheuristics.optimization_tools.optimization_problem</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for metaheuristics.optimization_tools.optimization_problem</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;The OptimizationProblem task is a representation of an optimization problem</span>
+<span class="sd">to be solved. It can store the current solution and also provides functionality</span>
+<span class="sd">to move from one solution to a neighbouring solution</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">metaheuristics.optimization_tools.optimization_solution</span> \
+    <span class="kn">import</span> <span class="nn">OptimizationSolution</span>
+
+<div class="viewcode-block" id="OptimizationProblem"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem">[docs]</a><span class="k">class</span> <span class="nc">OptimizationProblem</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to maintain an optimization problem to be solved using</span>
+<span class="sd">    a metaheuristic algorithm</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ---------</span>
+<span class="sd">    initial_solution_value: object</span>
+<span class="sd">        An initial feasible solution to the optimization problem,</span>
+<span class="sd">        used to initialize a metaheuristic algorithm</span>
+<span class="sd">    objective_function: function</span>
+<span class="sd">        A function that returns the objective value for a solution</span>
+<span class="sd">        to the optimization problem. The function takes a single</span>
+<span class="sd">        parameter of the same type as initial_solution_value, representing</span>
+<span class="sd">        a solution to the optimization problem, and returns a float,</span>
+<span class="sd">        representing the objective value for that solution</span>
+<span class="sd">    solution_updater: function</span>
+<span class="sd">        A function used to move from one solution to a neighbour solution.</span>
+<span class="sd">        This function takes a single parameter of the same type as</span>
+<span class="sd">        initial_solution_value, representing a solution to the optimization</span>
+<span class="sd">        problem, and returns an object of the same type, representing a neighbour</span>
+<span class="sd">        solution. A common characteristic of metaheuristic algorithms is taking one</span>
+<span class="sd">        solution and applying some transformation to move to another solution,</span>
+<span class="sd">        also known as a neighbour.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    objective_function: function</span>
+<span class="sd">        A function that returns the objective value for a solution</span>
+<span class="sd">        to the optimization problem. The function takes a single</span>
+<span class="sd">        parameter of the same type as initial_solution_value, representing</span>
+<span class="sd">        a solution to the optimization problem, and returns a float,</span>
+<span class="sd">        representing the objective value for that solution</span>
+<span class="sd">    solution_updater: function</span>
+<span class="sd">        A function used to move from one solution to a neighbour solution.</span>
+<span class="sd">        This function takes a single parameter of the same type as</span>
+<span class="sd">        initial_solution_value, representing a solution to the optimization</span>
+<span class="sd">        problem, and returns an object of the same type, representing a neighbour</span>
+<span class="sd">        solution.</span>
+<span class="sd">    current_solution: OptimizationSolution</span>
+<span class="sd">        An OptimizationSolution representing the current solution to the optimization</span>
+<span class="sd">        problem</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_solution_value</span><span class="p">,</span> <span class="n">objective_function</span><span class="p">,</span> <span class="n">solution_updater</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_objective_function</span> <span class="o">=</span> <span class="n">objective_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_solution_updater</span> <span class="o">=</span> <span class="n">solution_updater</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span> <span class="o">=</span> <span class="n">OptimizationSolution</span><span class="p">(</span>
+                <span class="n">initial_solution_value</span><span class="p">,</span> <span class="n">objective_function</span><span class="p">(</span><span class="n">initial_solution_value</span><span class="p">))</span>
+
+<div class="viewcode-block" id="OptimizationProblem.get_current_solution"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.get_current_solution">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the current solution to the optimization problem</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            The current solution to the optimization problem</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span><span class="o">.</span><span class="n">get_solution_value</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="OptimizationProblem.get_objective_function"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.get_objective_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the objective function for the optimization problem</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        function</span>
+<span class="sd">            The objective function for the optimization problem</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective_function</span></div>
+
+<div class="viewcode-block" id="OptimizationProblem.get_current_objective_value"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.get_current_objective_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the objective value of the current solution to the</span>
+<span class="sd">        optimization problem</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The objective value of the current solution to the optimization</span>
+<span class="sd">            problem</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span><span class="o">.</span><span class="n">get_objective_value</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="OptimizationProblem.find_neighbour_solution"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.find_neighbour_solution">[docs]</a>    <span class="k">def</span> <span class="nf">find_neighbour_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Applies the solution_updater function to the current</span>
+<span class="sd">        solution in order to find a neighbour solution</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        OptimizationSolution</span>
+<span class="sd">            An OptimizationSolution representing a neighbour of the</span>
+<span class="sd">            current solution</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">curr_solution_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span><span class="o">.</span><span class="n">get_solution_value</span><span class="p">()</span>
+        <span class="n">new_solution_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_solution_updater</span><span class="p">(</span><span class="n">curr_solution_val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">OptimizationSolution</span><span class="p">(</span>
+                <span class="n">new_solution_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective_function</span><span class="p">(</span><span class="n">new_solution_val</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="OptimizationProblem.update_current_solution"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.update_current_solution">[docs]</a>    <span class="k">def</span> <span class="nf">update_current_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_solution_val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates the current solution of the optimization problem</span>
+<span class="sd">        to new_solution_val</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_solution_val: object</span>
+<span class="sd">            A new solution to the optimization algorithm the</span>
+<span class="sd">            current_solution parameter is updated based on this</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Side Effect</span>
+<span class="sd">        -----------</span>
+<span class="sd">        Resets the current_solution attribute to new_solution</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span> <span class="o">=</span> <span class="n">OptimizationSolution</span><span class="p">(</span>
+                <span class="n">new_solution_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_objective_function</span><span class="p">()(</span><span class="n">new_solution_val</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Matt Buckley
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
