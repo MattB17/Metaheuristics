@@ -14,7 +14,8 @@ release = '0.1.0'
 
 
 # General Configuration
-extensions = ['sphinx.ext.viewcode',
+extensions = ['sphinx.ext.autosummary',
+              'sphinx.ext.viewcode',
               'sphinx.ext.autodoc',
               'sphinx_rtd_theme',
               'numpydoc']

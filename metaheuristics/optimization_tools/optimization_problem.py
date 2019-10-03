@@ -1,3 +1,9 @@
+"""The OptimizationProblem task is a representation of an optimization problem
+to be solved. It can store the current solution and also provides functionality
+to move from one solution to a neighbouring solution
+
+"""
+
 from metaheuristics.optimization_tools.optimization_solution \
     import OptimizationSolution
 

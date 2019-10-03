@@ -1,0 +1,13 @@
+autodoc==0.5.0
+docutils==0.14
+numpy==1.14.0
+numpydoc==0.7.0
+pandas==0.20.3
+pep8==1.7.0
+pkginfo==1.4.1
+plotly==2.2.3
+Pygments==2.2.0
+pytest==3.2.1
+pytest-cov==2.6.0
+Sphinx==1.6.3
+sphinx-rtd-theme==0.4.3

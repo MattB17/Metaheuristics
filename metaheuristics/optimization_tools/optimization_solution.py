@@ -1,3 +1,9 @@
+"""The OptimizationSolution class acts as a container class for a solution
+to an optimization problem. It is a convenient object to be used in
+optimization algorithms in order to aid in the comparison of solutions
+
+"""
+
 class OptimizationSolution:
     """A container class for a solution to an optimization problem
 

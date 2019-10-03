@@ -1,3 +1,8 @@
+"""This module stores a set of methods that serve as the objective functions
+for various optimization problems
+
+"""
+
 import numpy as np
 
 

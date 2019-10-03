@@ -33,7 +33,8 @@ def calculate_adjustment(additive_adjustment, multiplicative_adjustment, multipl
         to a continuous optimization problem
 
     """
-    return (1 - (2 * (additive_adjustment < 0.5))) * multiplicative_constant * multiplicative_adjustment
+    sign = 1 - (2 * (additive_adjustment < 0.5))
+    return sign * multiplicative_constant * multiplicative_adjustment
 
 
 def pick_neighbour_for_himmelblau(solution_tuple, multiplicative_constant):
