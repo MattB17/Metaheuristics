@@ -1,7 +1,7 @@
 Tools to Solve Optimization Problems
 ====================================
 
-.. automodule:: metaheuristics.optimization_tools
+.. automodule:: metaheuristics.tools
 
 .. toctree::
    :maxdepth: 2

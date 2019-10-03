@@ -4,9 +4,9 @@ from matplotlib import pyplot as plt
 from metaheuristics.simulated_annealing.temperature_params import TemperatureParams
 import random
 import copy
-from metaheuristics.optimization_tools.optimization_functions \
-    import quadratic_assignment_problem_objective, himmelblau
-from metaheuristics.optimization_tools.optimization_problem \
+from metaheuristics.tools.functions \
+    import quadratic_assignment_objective, himmelblau
+from metaheuristics.tools.optimization_problem \
     import OptimizationProblem
 
 

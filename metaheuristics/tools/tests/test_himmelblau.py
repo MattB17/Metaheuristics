@@ -1,4 +1,4 @@
-from metaheuristics.optimization_tools.optimization_functions import himmelblau
+from metaheuristics.tools.functions import himmelblau
 
 
 def test_with_both_coordinates_zero():

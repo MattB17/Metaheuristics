@@ -9,7 +9,7 @@ Welcome to Metaheuristics's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   optimization_tools/tools
+   tools/tools
    simulated_annealing/annealing
 
 

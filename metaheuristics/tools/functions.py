@@ -6,7 +6,7 @@ for various optimization problems
 import numpy as np
 
 
-def quadratic_assignment_problem_objective(dist_matrix, flow_matrix, facility_order):
+def quadratic_assignment_objective(dist_matrix, flow_matrix, facility_order):
     """Calculates the objective value for the quadratic assignment problem
 
     Parameters

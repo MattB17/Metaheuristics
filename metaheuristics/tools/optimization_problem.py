@@ -4,8 +4,7 @@ to move from one solution to a neighbouring solution
 
 """
 
-from metaheuristics.optimization_tools.optimization_solution \
-    import OptimizationSolution
+from metaheuristics.tools.optimization_solution import OptimizationSolution
 
 class OptimizationProblem:
     """A class to maintain an optimization problem to be solved using

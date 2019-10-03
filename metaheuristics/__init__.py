@@ -5,7 +5,5 @@ Metaheuristics are heuristics that are inspired by nature and are not
 problem-specific
 
 """
-from metaheuristics.optimization_tools.optimization_problem \
-    import OptimizationProblem
-from metaheuristics.optimization_tools.optimization_solution \
-    import OptimizationSolution
+from metaheuristics.tools.optimization_problem import OptimizationProblem
+from metaheuristics.tools.optimization_solution import OptimizationSolution

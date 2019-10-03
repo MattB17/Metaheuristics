@@ -1,7 +1,5 @@
-from metaheuristics.optimization_tools.optimization_problem \
-    import OptimizationProblem
-from metaheuristics.optimization_tools.optimization_solution \
-    import OptimizationSolution
+from metaheuristics.tools.optimization_problem import OptimizationProblem
+from metaheuristics.tools.optimization_solution import OptimizationSolution
 from unittest.mock import call, MagicMock
 
 
