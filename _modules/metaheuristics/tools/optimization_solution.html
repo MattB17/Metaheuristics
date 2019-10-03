@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>metaheuristics.optimization_tools.optimization_solution &mdash; Metaheuristics 0.1.0 documentation</title>
+  <title>metaheuristics.tools.optimization_solution &mdash; Metaheuristics 0.1.0 documentation</title>
   
 
   
@@ -142,7 +142,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>metaheuristics.optimization_tools.optimization_solution</li>
+      <li>metaheuristics.tools.optimization_solution</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -157,14 +157,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for metaheuristics.optimization_tools.optimization_solution</h1><div class="highlight"><pre>
+  <h1>Source code for metaheuristics.tools.optimization_solution</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;The OptimizationSolution class acts as a container class for a solution</span>
 <span class="sd">to an optimization problem. It is a convenient object to be used in</span>
 <span class="sd">optimization algorithms in order to aid in the comparison of solutions</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="OptimizationSolution"><a class="viewcode-back" href="../../../optimization_tools/solution.html#metaheuristics.OptimizationSolution">[docs]</a><span class="k">class</span> <span class="nc">OptimizationSolution</span><span class="p">:</span>
+<div class="viewcode-block" id="OptimizationSolution"><a class="viewcode-back" href="../../../tools/solution.html#metaheuristics.OptimizationSolution">[docs]</a><span class="k">class</span> <span class="nc">OptimizationSolution</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A container class for a solution to an optimization problem</span>
 
 <span class="sd">    Attributes</span>
@@ -183,7 +183,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_solution_value</span> <span class="o">=</span> <span class="n">solution_value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_objective_value</span> <span class="o">=</span> <span class="n">objective_value</span>
 
-<div class="viewcode-block" id="OptimizationSolution.get_solution_value"><a class="viewcode-back" href="../../../optimization_tools/solution.html#metaheuristics.OptimizationSolution.get_solution_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_solution_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimizationSolution.get_solution_value"><a class="viewcode-back" href="../../../tools/solution.html#metaheuristics.OptimizationSolution.get_solution_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_solution_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the solution for an optimization problem</span>
 
 <span class="sd">        Returns</span>
@@ -194,7 +194,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_solution_value</span></div>
 
-<div class="viewcode-block" id="OptimizationSolution.get_objective_value"><a class="viewcode-back" href="../../../optimization_tools/solution.html#metaheuristics.OptimizationSolution.get_objective_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimizationSolution.get_objective_value"><a class="viewcode-back" href="../../../tools/solution.html#metaheuristics.OptimizationSolution.get_objective_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the objective value of the solution</span>
 
 <span class="sd">        Returns</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; Metaheuristics 0.1.0 documentation</title>
+  <title>Optimization Functions &mdash; Metaheuristics 0.1.0 documentation</title>
   
 
   
@@ -93,7 +93,6 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tools/tools.html">Tools to Solve Optimization Problems</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simulated_annealing/annealing.html">Simulated Annealing Algorithm</a></li>
 </ul>
 
@@ -140,10 +139,14 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Overview: module code</li>
+      <li>Optimization Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tools/functions.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -155,15 +158,76 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="metaheuristics/optimization_tools/optimization_functions.html">metaheuristics.optimization_tools.optimization_functions</a></li>
-<li><a href="metaheuristics/optimization_tools/optimization_problem.html">metaheuristics.optimization_tools.optimization_problem</a></li>
-<li><a href="metaheuristics/optimization_tools/optimization_solution.html">metaheuristics.optimization_tools.optimization_solution</a></li>
-<li><a href="metaheuristics/tools/functions.html">metaheuristics.tools.functions</a></li>
-<li><a href="metaheuristics/tools/optimization_functions.html">metaheuristics.tools.optimization_functions</a></li>
-<li><a href="metaheuristics/tools/optimization_problem.html">metaheuristics.tools.optimization_problem</a></li>
-<li><a href="metaheuristics/tools/optimization_solution.html">metaheuristics.tools.optimization_solution</a></li>
-</ul>
+  <div class="section" id="module-metaheuristics.tools.functions">
+<span id="optimization-functions"></span><h1>Optimization Functions<a class="headerlink" href="#module-metaheuristics.tools.functions" title="Permalink to this headline">¶</a></h1>
+<p>This module stores a set of methods that serve as the objective functions
+for various optimization problems</p>
+<dl class="function">
+<dt id="metaheuristics.tools.functions.himmelblau">
+<code class="descclassname">metaheuristics.tools.functions.</code><code class="descname">himmelblau</code><span class="sig-paren">(</span><em>solution_tuple</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/metaheuristics/tools/functions.html#himmelblau"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metaheuristics.tools.functions.himmelblau" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of the himmelblau function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>solution_tuple: tuple</strong></p>
+<blockquote>
+<div><p>A two element tuple with the x and y coordinates of a
+solution to the himmelblau function</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">float</p>
+<blockquote class="last">
+<div><p>The value of the himmelblau function at the solution given
+by x and y</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="metaheuristics.tools.functions.quadratic_assignment_objective">
+<code class="descclassname">metaheuristics.tools.functions.</code><code class="descname">quadratic_assignment_objective</code><span class="sig-paren">(</span><em>dist_matrix</em>, <em>flow_matrix</em>, <em>facility_order</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/metaheuristics/tools/functions.html#quadratic_assignment_objective"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metaheuristics.tools.functions.quadratic_assignment_objective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the objective value for the quadratic assignment problem</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dist_matrix: pandas.DataFrame</strong></p>
+<blockquote>
+<div><p>The matrix of distance values. This is a square matrix where the
+entry in row i, column j represents the distance from facility i
+to facility j</p>
+</div></blockquote>
+<p><strong>flow_matrix: pandas.DataFrame</strong></p>
+<blockquote>
+<div><p>The matrix of flow values. This is a square matrix where the
+entry in row i, column j represents the flow from facility i
+to facility j</p>
+</div></blockquote>
+<p><strong>facility_order: list</strong></p>
+<blockquote>
+<div><p>A list representing an ordering of the facilities, corresponding
+to a solution</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">float</p>
+<blockquote class="last">
+<div><p>The objective value for the solution given by facility_order to
+the quadratic assignment problem</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
 
            </div>
            

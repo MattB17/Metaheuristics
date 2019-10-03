@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>metaheuristics.optimization_tools.optimization_problem &mdash; Metaheuristics 0.1.0 documentation</title>
+  <title>metaheuristics.tools.optimization_problem &mdash; Metaheuristics 0.1.0 documentation</title>
   
 
   
@@ -142,7 +142,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>metaheuristics.optimization_tools.optimization_problem</li>
+      <li>metaheuristics.tools.optimization_problem</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -157,17 +157,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for metaheuristics.optimization_tools.optimization_problem</h1><div class="highlight"><pre>
+  <h1>Source code for metaheuristics.tools.optimization_problem</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;The OptimizationProblem task is a representation of an optimization problem</span>
 <span class="sd">to be solved. It can store the current solution and also provides functionality</span>
 <span class="sd">to move from one solution to a neighbouring solution</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">metaheuristics.optimization_tools.optimization_solution</span> \
-    <span class="kn">import</span> <span class="nn">OptimizationSolution</span>
+<span class="kn">from</span> <span class="nn">metaheuristics.tools.optimization_solution</span> <span class="k">import</span> <span class="n">OptimizationSolution</span>
 
-<div class="viewcode-block" id="OptimizationProblem"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem">[docs]</a><span class="k">class</span> <span class="nc">OptimizationProblem</span><span class="p">:</span>
+<div class="viewcode-block" id="OptimizationProblem"><a class="viewcode-back" href="../../../tools/problem.html#metaheuristics.OptimizationProblem">[docs]</a><span class="k">class</span> <span class="nc">OptimizationProblem</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A class to maintain an optimization problem to be solved using</span>
 <span class="sd">    a metaheuristic algorithm</span>
 
@@ -216,7 +215,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span> <span class="o">=</span> <span class="n">OptimizationSolution</span><span class="p">(</span>
                 <span class="n">initial_solution_value</span><span class="p">,</span> <span class="n">objective_function</span><span class="p">(</span><span class="n">initial_solution_value</span><span class="p">))</span>
 
-<div class="viewcode-block" id="OptimizationProblem.get_current_solution"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.get_current_solution">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimizationProblem.get_current_solution"><a class="viewcode-back" href="../../../tools/problem.html#metaheuristics.OptimizationProblem.get_current_solution">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the current solution to the optimization problem</span>
 
 <span class="sd">        Returns</span>
@@ -227,7 +226,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span><span class="o">.</span><span class="n">get_solution_value</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="OptimizationProblem.get_objective_function"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.get_objective_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimizationProblem.get_objective_function"><a class="viewcode-back" href="../../../tools/problem.html#metaheuristics.OptimizationProblem.get_objective_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the objective function for the optimization problem</span>
 
 <span class="sd">        Returns</span>
@@ -238,7 +237,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective_function</span></div>
 
-<div class="viewcode-block" id="OptimizationProblem.get_current_objective_value"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.get_current_objective_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimizationProblem.get_current_objective_value"><a class="viewcode-back" href="../../../tools/problem.html#metaheuristics.OptimizationProblem.get_current_objective_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the objective value of the current solution to the</span>
 <span class="sd">        optimization problem</span>
 
@@ -251,7 +250,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_solution</span><span class="o">.</span><span class="n">get_objective_value</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="OptimizationProblem.find_neighbour_solution"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.find_neighbour_solution">[docs]</a>    <span class="k">def</span> <span class="nf">find_neighbour_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimizationProblem.find_neighbour_solution"><a class="viewcode-back" href="../../../tools/problem.html#metaheuristics.OptimizationProblem.find_neighbour_solution">[docs]</a>    <span class="k">def</span> <span class="nf">find_neighbour_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Applies the solution_updater function to the current</span>
 <span class="sd">        solution in order to find a neighbour solution</span>
 
@@ -267,7 +266,7 @@
         <span class="k">return</span> <span class="n">OptimizationSolution</span><span class="p">(</span>
                 <span class="n">new_solution_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective_function</span><span class="p">(</span><span class="n">new_solution_val</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="OptimizationProblem.update_current_solution"><a class="viewcode-back" href="../../../optimization_tools/problem.html#metaheuristics.OptimizationProblem.update_current_solution">[docs]</a>    <span class="k">def</span> <span class="nf">update_current_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_solution_val</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimizationProblem.update_current_solution"><a class="viewcode-back" href="../../../tools/problem.html#metaheuristics.OptimizationProblem.update_current_solution">[docs]</a>    <span class="k">def</span> <span class="nf">update_current_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_solution_val</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates the current solution of the optimization problem</span>
 <span class="sd">        to new_solution_val</span>
 

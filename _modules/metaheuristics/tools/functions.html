@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>metaheuristics.optimization_tools.optimization_functions &mdash; Metaheuristics 0.1.0 documentation</title>
+  <title>metaheuristics.tools.functions &mdash; Metaheuristics 0.1.0 documentation</title>
   
 
   
@@ -142,7 +142,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>metaheuristics.optimization_tools.optimization_functions</li>
+      <li>metaheuristics.tools.functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -157,7 +157,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for metaheuristics.optimization_tools.optimization_functions</h1><div class="highlight"><pre>
+  <h1>Source code for metaheuristics.tools.functions</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;This module stores a set of methods that serve as the objective functions</span>
 <span class="sd">for various optimization problems</span>
 
@@ -166,7 +166,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="quadratic_assignment_problem_objective"><a class="viewcode-back" href="../../../optimization_tools/functions.html#metaheuristics.optimization_tools.optimization_functions.quadratic_assignment_problem_objective">[docs]</a><span class="k">def</span> <span class="nf">quadratic_assignment_problem_objective</span><span class="p">(</span><span class="n">dist_matrix</span><span class="p">,</span> <span class="n">flow_matrix</span><span class="p">,</span> <span class="n">facility_order</span><span class="p">):</span>
+<div class="viewcode-block" id="quadratic_assignment_objective"><a class="viewcode-back" href="../../../tools/functions.html#metaheuristics.tools.functions.quadratic_assignment_objective">[docs]</a><span class="k">def</span> <span class="nf">quadratic_assignment_objective</span><span class="p">(</span><span class="n">dist_matrix</span><span class="p">,</span> <span class="n">flow_matrix</span><span class="p">,</span> <span class="n">facility_order</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculates the objective value for the quadratic assignment problem</span>
 
 <span class="sd">    Parameters</span>
@@ -198,7 +198,7 @@
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">objective_value_df</span><span class="p">)))</span></div>
 
 
-<div class="viewcode-block" id="himmelblau"><a class="viewcode-back" href="../../../optimization_tools/functions.html#metaheuristics.optimization_tools.optimization_functions.himmelblau">[docs]</a><span class="k">def</span> <span class="nf">himmelblau</span><span class="p">(</span><span class="n">solution_tuple</span><span class="p">):</span>
+<div class="viewcode-block" id="himmelblau"><a class="viewcode-back" href="../../../tools/functions.html#metaheuristics.tools.functions.himmelblau">[docs]</a><span class="k">def</span> <span class="nf">himmelblau</span><span class="p">(</span><span class="n">solution_tuple</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An implementation of the himmelblau function</span>
 
 <span class="sd">    Parameters</span>
