@@ -1,6 +1,6 @@
 #Ignoreall pycache
 __pycache__/
-.cache/
+.cache
 
 #Ignored files
 *.DS_Store
