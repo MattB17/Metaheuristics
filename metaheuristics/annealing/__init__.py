@@ -16,7 +16,9 @@ some uphill moves are allowed. The uphill moves are used to get out of local
 optima in the hopes of finding another region in which the local optima is also
 a global optima. Uphill moves are controlled by a temperature parameter which
 decreases over time, corresponding to a reduced probability of accepting uphill
-moves.
+moves. The temperature is a parameter denoting the willingness to accept worse
+solutions. Throughout the algorithm, the temperature decreases, causing the
+value of the simulated annealing function to decrease.
 
 """
 from metaheuristics.annealing.temp_params import TempParams
