@@ -1,4 +1,12 @@
-class TemperatureParams:
+"""The TempParams class is a container class for tempeature parameters used
+in the simulated annealing algorithm. The class keeps track of how the initial
+and current temperature, the number of temperature changes, and the function
+used to move from one temperature to the next
+
+"""
+
+
+class TempParams:
     """A container class to handle parameters related to the temperature
     used during the simulated annealing algorithm
 
@@ -16,13 +24,13 @@ class TemperatureParams:
         The temperature at a particular point during the algorithm
 
     """
-    def __init__(self, initial_temperature, temperature_changes, temperature_updater):
-        self._initial_temperature = initial_temperature
-        self._temperature_changes = temperature_changes
-        self._temperature_updater = temperature_updater
-        self._current_temperature = initial_temperature
+    def __init__(self, initial_temp, temp_changes, temp_updater):
+        self._initial_temp = initial_temp
+        self._temp_changes = temp_changes
+        self._temp_updater = temp_updater
+        self._current_temp = initial_temp
 
-    def get_initial_temperature(self):
+    def get_initial_temp(self):
         """Retrieves the initial temperature used in the algorithm
 
         Returns
@@ -31,9 +39,9 @@ class TemperatureParams:
             The initial temperature used in the algorithm
 
         """
-        return self._initial_temperature
+        return self._initial_temp
 
-    def get_number_of_temperatures(self):
+    def get_number_of_temps(self):
         """Retrieves the number of times the temperature changes
         during the simulated annealing algorithm
 
@@ -43,9 +51,9 @@ class TemperatureParams:
             The number of temperature changes during the algorithm
 
         """
-        return self._temperature_changes
+        return self._temp_changes
 
-    def update_temperature(self):
+    def update_temp(self):
         """Updates the current temperature using temperature_updater
 
         Returns
@@ -58,9 +66,9 @@ class TemperatureParams:
         temperature_updater to it
 
         """
-        self._current_temperature = self._temperature_updater(self._current_temperature)
+        self._current_temp = self._temp_updater(self._current_temp)
 
-    def get_current_temperature(self):
+    def get_current_temp(self):
         """Retrieves the current temperature at a point in the algorithm
 
         Returns
@@ -70,4 +78,29 @@ class TemperatureParams:
             during the simulated annealing algorithm
 
         """
-        return self._current_temperature
+        return self._current_temp
+
+    def __eq__(self, other_params):
+        """Checks if two `TempParams` objects are equal
+
+        Two `TempParams` are deemed equal if the have the same initial
+        temperature, the same current temperature, the same number of
+        temperature changes, and the same function used to update the current
+        temperature to the next
+
+        Parameters
+        ----------
+        other_params: TempParams
+            The second `TempParams` object being compared to self
+
+        Returns
+        -------
+        bool
+            True if the two `TempParams` objects are equal, otherwise False
+
+        """
+        same_initial = self._initial_temp == other_params._initial_temp
+        same_changes = self._temp_changes == other_params._temp_changes
+        same_updater = self._temp_updater == other_params._temp_updater
+        same_current = self._current_temp == other_params._current_temp
+        return same_initial and same_changes and same_updater and same_current
