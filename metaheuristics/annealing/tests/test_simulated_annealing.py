@@ -1,11 +1,13 @@
 import pytest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, call
 from metaheuristics.annealing.simulated_annealing import SimulatedAnnealing
 
 
 @pytest.fixture(scope="function")
 def mock_temps():
-    return MagicMock()
+    temps = MagicMock()
+    temps.update_temp = MagicMock(side_effect=None)
+    return temps
 
 
 @pytest.fixture(scope="function")
@@ -105,3 +107,100 @@ def test_should_not_change_when_random_num_greater_than_func_val(annealing,
     assert not annealing.should_change_solution(29.8, 38.1)
     annealing.annealing_function.assert_called_once_with(29.8, 38.1)
     mock_random.assert_called_once()
+
+
+def test_when_solution_changes(annealing, mock_problem):
+    curr_solution = MagicMock()
+    new_solution = MagicMock()
+    mock_problem.get_current_solution = MagicMock(return_value=curr_solution)
+    mock_problem.find_neighbour_solution = MagicMock(return_value=new_solution)
+    curr_solution.get_objective_value = MagicMock(return_value=12)
+    new_solution.get_objective_value = MagicMock(return_value=9)
+    annealing.should_change_solution = MagicMock(return_value=True)
+    assert annealing.run_annealing_step() == new_solution
+    mock_problem.get_current_solution.assert_called_once()
+    mock_problem.find_neighbour_solution.assert_called_once()
+    annealing.should_change_solution.assert_called_once_with(12, 9)
+
+
+def test_when_solution_does_not_change(annealing, mock_problem):
+    curr_solution = MagicMock()
+    new_solution = MagicMock()
+    mock_problem.get_current_solution = MagicMock(return_value=curr_solution)
+    mock_problem.find_neighbour_solution = MagicMock(return_value=new_solution)
+    curr_solution.get_objective_value = MagicMock(return_value=17.5)
+    new_solution.get_objective_value = MagicMock(return_value=37)
+    annealing.should_change_solution = MagicMock(return_value=False)
+    assert annealing.run_annealing_step() == curr_solution
+    mock_problem.get_current_solution.assert_called_once()
+    mock_problem.find_neighbour_solution.assert_called_once()
+    annealing.should_change_solution.assert_called_once_with(17.5, 37)
+
+
+def test_annealing_iteration_no_steps(annealing, mock_temps,
+                                      mock_iter_func, mock_problem):
+    mock_iter_func.return_value = 0
+    annealing.run_annealing_step = MagicMock()
+    mock_problem.update_current_solution = MagicMock()
+    mock_temps.get_current_temp = MagicMock(return_value=2.5)
+    solution1 = MagicMock()
+    solution2 = MagicMock()
+    mock_problem.get_current_solution = MagicMock(return_value=solution2)
+    temps = [4.8, 3.9, None, None, None]
+    solutions = [solution1, solution2, None, None, None]
+    annealing.perform_annealing_iteration(2, temps, solutions)
+    mock_iter_func.assert_called_once_with(2)
+    annealing.run_annealing_step.assert_not_called()
+    mock_problem.update_current_solution.assert_not_called()
+    mock_temps.get_current_temp.assert_called_once()
+    mock_problem.get_current_solution.assert_called_once()
+    mock_temps.update_temp.assert_called_once()
+    assert temps == [4.8, 3.9, 2.5, None, None]
+    assert solutions == [solution1, solution2, solution2, None, None]
+
+
+def test_annealing_iteration_one_step(annealing, mock_temps,
+                                      mock_iter_func, mock_problem):
+    mock_iter_func.return_value = 1
+    solution = MagicMock()
+    annealing.run_annealing_step = MagicMock(return_value=solution)
+    mock_problem.update_current_solution = MagicMock(side_effect=None)
+    mock_temps.get_current_temp = MagicMock(return_value=10)
+    mock_problem.get_current_solution = MagicMock(return_value=solution)
+    temps = [None, None]
+    solutions = [None, None]
+    annealing.perform_annealing_iteration(0, temps, solutions)
+    mock_iter_func.assert_called_once_with(0)
+    annealing.run_annealing_step.assert_called_once()
+    mock_problem.update_current_solution.assert_called_once_with(solution)
+    mock_temps.get_current_temp.assert_called_once()
+    mock_problem.get_current_solution.assert_called_once()
+    mock_temps.update_temp.assert_called_once()
+    assert temps == [10, None]
+    assert solutions == [solution, None]
+
+
+def test_annealing_iteration_multi_step(annealing, mock_temps,
+                                        mock_iter_func, mock_problem):
+    mock_iter_func.return_value = 3
+    solutions = [MagicMock(), MagicMock(), MagicMock(),
+                 MagicMock(), MagicMock()]
+    annealing.run_annealing_step = MagicMock(
+        side_effect=[solutions[3], solutions[4], solutions[4]])
+    mock_problem.update_current_solution = MagicMock(side_effect=None)
+    mock_temps.get_current_temp = MagicMock(return_value=0.5)
+    mock_problem.get_current_solution = MagicMock(return_value=solutions[4])
+    temps = [2, 1.5, 1, None]
+    solutions_list = [solutions[0], solutions[1], solutions[2], None]
+    annealing.perform_annealing_iteration(3, temps, solutions_list)
+    mock_iter_func.assert_called_once_with(3)
+    assert annealing.run_annealing_step.call_count == 3
+    update_calls = [call(solutions[3]), call(solutions[4]), call(solutions[4])]
+    mock_problem.update_current_solution.assert_has_calls(update_calls)
+    assert mock_problem.update_current_solution.call_count == 3
+    mock_temps.get_current_temp.assert_called_once()
+    mock_problem.get_current_solution.assert_called_once()
+    mock_temps.update_temp.assert_called_once()
+    assert temps == [2, 1.5, 1, 0.5]
+    assert solutions_list == [solutions[0], solutions[1],
+                              solutions[2], solutions[4]]
