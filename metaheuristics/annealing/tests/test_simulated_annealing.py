@@ -148,15 +148,15 @@ def test_annealing_iteration_no_steps(annealing, mock_temps,
     mock_problem.get_current_solution = MagicMock(return_value=solution2)
     temps = [4.8, 3.9, None, None, None]
     solutions = [solution1, solution2, None, None, None]
-    annealing.perform_annealing_iteration(2, temps, solutions)
+    output = annealing.perform_annealing_iteration(2, temps, solutions)
     mock_iter_func.assert_called_once_with(2)
     annealing.run_annealing_step.assert_not_called()
     mock_problem.update_current_solution.assert_not_called()
     mock_temps.get_current_temp.assert_called_once()
     mock_problem.get_current_solution.assert_called_once()
     mock_temps.update_temp.assert_called_once()
-    assert temps == [4.8, 3.9, 2.5, None, None]
-    assert solutions == [solution1, solution2, solution2, None, None]
+    assert output[0] == [4.8, 3.9, 2.5, None, None]
+    assert output[1] == [solution1, solution2, solution2, None, None]
 
 
 def test_annealing_iteration_one_step(annealing, mock_temps,
@@ -169,15 +169,15 @@ def test_annealing_iteration_one_step(annealing, mock_temps,
     mock_problem.get_current_solution = MagicMock(return_value=solution)
     temps = [None, None]
     solutions = [None, None]
-    annealing.perform_annealing_iteration(0, temps, solutions)
+    output = annealing.perform_annealing_iteration(0, temps, solutions)
     mock_iter_func.assert_called_once_with(0)
     annealing.run_annealing_step.assert_called_once()
     mock_problem.update_current_solution.assert_called_once_with(solution)
     mock_temps.get_current_temp.assert_called_once()
     mock_problem.get_current_solution.assert_called_once()
     mock_temps.update_temp.assert_called_once()
-    assert temps == [10, None]
-    assert solutions == [solution, None]
+    assert output[0] == [10, None]
+    assert output[1] == [solution, None]
 
 
 def test_annealing_iteration_multi_step(annealing, mock_temps,
@@ -192,7 +192,7 @@ def test_annealing_iteration_multi_step(annealing, mock_temps,
     mock_problem.get_current_solution = MagicMock(return_value=solutions[4])
     temps = [2, 1.5, 1, None]
     solutions_list = [solutions[0], solutions[1], solutions[2], None]
-    annealing.perform_annealing_iteration(3, temps, solutions_list)
+    output = annealing.perform_annealing_iteration(3, temps, solutions_list)
     mock_iter_func.assert_called_once_with(3)
     assert annealing.run_annealing_step.call_count == 3
     update_calls = [call(solutions[3]), call(solutions[4]), call(solutions[4])]
@@ -201,6 +201,50 @@ def test_annealing_iteration_multi_step(annealing, mock_temps,
     mock_temps.get_current_temp.assert_called_once()
     mock_problem.get_current_solution.assert_called_once()
     mock_temps.update_temp.assert_called_once()
-    assert temps == [2, 1.5, 1, 0.5]
-    assert solutions_list == [solutions[0], solutions[1],
-                              solutions[2], solutions[4]]
+    assert output[0] == [2, 1.5, 1, 0.5]
+    assert output[1] == [solutions[0], solutions[1],
+                         solutions[2], solutions[4]]
+
+
+def test_run_annealing_no_iterations(annealing, mock_temps):
+    mock_temps.get_number_of_temps = MagicMock(return_value=0)
+    annealing.perform_annealing_iteration = MagicMock()
+    temps, solution_per_temp = annealing.run_simulated_annealing()
+    assert temps == []
+    assert solution_per_temp == []
+    mock_temps.get_number_of_temps.assert_called_once()
+    annealing.perform_annealing_iteration.assert_not_called()
+
+
+def test_run_annealing_one_iteration(annealing, mock_temps):
+    mock_temps.get_number_of_temps = MagicMock(return_value=1)
+    mock_solution = MagicMock()
+    annealing.perform_annealing_iteration = MagicMock(
+        return_value=([0.7], [mock_solution]))
+    output = annealing.run_simulated_annealing()
+    assert output[0] == [0.7]
+    assert output[1] == [mock_solution]
+    mock_temps.get_number_of_temps.assert_called_once()
+    annealing.perform_annealing_iteration.assert_called_once_with(
+        0, [None], [None])
+
+
+def test_run_annealing_multi_iteration(annealing, mock_temps):
+    mock_temps.get_number_of_temps = MagicMock(return_value=3)
+    solutions = [MagicMock(), MagicMock(), MagicMock()]
+    temps = [1.5, 1.0, 0.5]
+    annealing.perform_annealing_iteration = MagicMock(
+        side_effect=[([temps[0], None, None], [solutions[0], None, None]),
+                     ([temps[0], temps[1], None],
+                      [solutions[0], solutions[1], None]),
+                     (temps, solutions)])
+    output = annealing.run_simulated_annealing()
+    assert output[0] == temps
+    assert output[1] == solutions
+    mock_temps.get_number_of_temps.assert_called_once()
+    assert annealing.perform_annealing_iteration.call_count == 3
+    calls = [call(0, [None, None, None], [None, None, None]),
+             call(1, [temps[0], None, None], [solutions[0], None, None]),
+             call(2, [temps[0], temps[1], None],
+                  [solutions[0], solutions[1], None])]
+    annealing.perform_annealing_iteration.assert_has_calls(calls)

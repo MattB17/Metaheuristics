@@ -21,4 +21,5 @@ solutions. Throughout the algorithm, the temperature decreases, causing the
 value of the simulated annealing function to decrease.
 
 """
+from metaheuristics.annealing.simulated_annealing import SimulatedAnnealing
 from metaheuristics.annealing.temp_params import TempParams

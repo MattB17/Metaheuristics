@@ -74,6 +74,35 @@ class SimulatedAnnealing:
         """
         return self._problem
 
+    def run_simulated_annealing(self):
+        """Runs the simulated annealing algorithm for a combinatorial problem
+
+        The algorithm is run on the optimization problem specified in the
+        `_problem` attribute. It has k iterations where k is the number of
+        temperature changes specified by the `_temp_params` attribute. At each
+        iteration a number of steps, as determined by the function in the
+        `_iteration_function` attribute. For each step a new solution is
+        generated and the annealing function uses the current temperature, as
+        specified in the `_temp_params` attribute, to decide if the new
+        solution should be accepted
+
+        Returns
+        -------
+        list, list
+            Two lists of equal size. The first list contains floats of the
+            temperatures used in the algorithm. The second list contains
+            OptimizationSolution objects specifying the final solution
+            taken for each temperature
+
+        """
+        iterations = self._temp_params.get_number_of_temps()
+        temps = [None for _ in range(iterations)]
+        solution_per_temp = [None for _ in range(iterations)]
+        for iter in range(iterations):
+            temps, solution_per_temp = self.perform_annealing_iteration(
+                iter, temps, solution_per_temp)
+        return temps, solution_per_temp
+
     def perform_annealing_iteration(self, iter_count, temps, solutions):
         """Performs an iteration of the simulated annealing algorithm
 
@@ -111,6 +140,7 @@ class SimulatedAnnealing:
         temps[iter_count] = self._temp_params.get_current_temp()
         solutions[iter_count] = self._problem.get_current_solution()
         self._temp_params.update_temp()
+        return temps, solutions
 
     def run_annealing_step(self):
         """Runs one step of the combinatorial version of the simulated

@@ -7,4 +7,5 @@ Simulated Annealing Algorithm
    :maxdepth: 2
    :caption: Contents:
 
+   simulated_annealing
    temps
