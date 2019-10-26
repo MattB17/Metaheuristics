@@ -61,3 +61,26 @@ def pick_neighbour_for_himmelblau(solution_tuple, multiplicative_constant):
             solution_tuple[1] + calculate_adjustment(y_adjustment_indicator,
                                                      y_multiplic_adjustment,
                                                      multiplicative_constant))
+
+
+def himmelblau_neighbour_finder(multiplicative_constant):
+    """A function to move between neighbour solutions for himmelblau
+
+    Parameters
+    ----------
+    multiplicative_constant: float
+        A sensitivity parameter used to move from one solution to another. A
+        smaller value indicates that the two solutions are separated by a
+        smaller distance
+
+    Returns
+    -------
+    function
+        A function for moving between neighbouring solutions for the himmelblau
+        problem. The function takes one argument, a two element tuple specifying
+        a current solution to the himmelblau problem. The function returns a
+        two element tuple specifying a neighbouring solution
+
+    """
+    return lambda solution: pick_neighbour_for_himmelblau(
+        solution, multiplicative_constant)
